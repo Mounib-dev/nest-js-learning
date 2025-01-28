@@ -60,17 +60,6 @@ export class TasksService {
     return task;
   }
 
-  // public createTask(createTaskDto: CreateTaskDto): Task {
-  //   const { title, description } = createTaskDto;
-  //   const task: Task = {
-  //     id: uuid(),
-  //     title,
-  //     description,
-  //     status: TaskStatus.OPEN,
-  //   };
-  //   this.tasks.push(task);
-  //   return task;
-  // }
   // public deleteTask(id: string): void {
   //   const task = this.getTaskById(id);
   //   if (task) {

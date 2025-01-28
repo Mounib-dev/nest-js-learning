@@ -40,12 +40,6 @@ export class TasksController {
     return this.tasksService.createTask(createTaskDto);
   }
 
-  // @Post()
-  // @HttpCode(201)
-  // createTask(@Body() createTaskDto: CreateTaskDto): Task {
-  //   return this.tasksService.createTask(createTaskDto);
-  // }
-
   // @Delete("/:id")
   // deleteTask(@Param("id") id: string): void {
   //   this.tasksService.deleteTask(id);
