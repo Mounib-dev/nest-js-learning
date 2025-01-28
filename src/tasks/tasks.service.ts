@@ -50,13 +50,14 @@ export class TasksService {
     return this.tasksRepository.createTask(createTaskDto);
   }
 
-  // public deleteTask(id: string): void {
-  //   const task = this.getTaskById(id);
-  //   if (task) {
-  //     const taskIndex = this.tasks.findIndex((task) => task.id === id);
-  //     this.tasks.splice(taskIndex, 1);
-  //   }
-  // }
+  async deleteTask(id: string): Promise<void> {
+    const result = await this.tasksRepository.delete(id);
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Task with ID "${id}" not found`);
+    }
+  }
+
   // public updateTask(id: string, status: TaskStatus) {
   //   const task = this.getTaskById(id);
   //   task.status = status;
