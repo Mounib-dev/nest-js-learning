@@ -15,6 +15,7 @@ import { CreateTaskDto } from "./dto/create-task.dto";
 import { GetTasksFilterDto } from "./dto/get-tasks-filter.dto";
 import { filter } from "rxjs";
 import { UpdateTaskStatusDto } from "./dto/update-task-status.dto";
+import { Task } from "./dto/task.entity";
 
 @Controller("/tasks")
 export class TasksController {
@@ -28,10 +29,10 @@ export class TasksController {
   //   return this.tasksService.getAllTasks();
   // }
 
-  // @Get("/:id")
-  // getTaskById(@Param("id") id: string): Task {
-  //   return this.tasksService.getTaskById(id);
-  // }
+  @Get("/:id")
+  getTaskById(@Param("id") id: string): Promise<Task> {
+    return this.tasksService.getTaskById(id);
+  }
 
   // @Post()
   // @HttpCode(201)
