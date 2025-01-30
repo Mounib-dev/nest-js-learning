@@ -9,6 +9,6 @@ export class AuthController {
   @Post("/sign-up")
   @HttpCode(201)
   async signUp(@Body() authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    this.authService.signUp(authCredentialsDto);
+    await this.authService.signUp(authCredentialsDto);
   }
 }
