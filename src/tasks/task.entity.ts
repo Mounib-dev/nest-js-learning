@@ -1,6 +1,6 @@
 import { IsNotEmpty, Length } from "class-validator";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { TaskStatus } from "../tasks-status.enum";
+import { TaskStatus } from "./tasks-status.enum";
 import { User } from "src/auth/user.entity";
 
 @Entity()
