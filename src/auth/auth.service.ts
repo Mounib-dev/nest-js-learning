@@ -27,7 +27,7 @@ export class AuthService {
         username: username,
       },
     });
-    console.log(process.env.JWT_SECRET);
+
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload: JwtPayload = {
         username,
