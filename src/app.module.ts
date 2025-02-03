@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { TasksModule } from "./tasks/tasks.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Task } from "./tasks/task.entity";
 import { AuthModule } from "./auth/auth.module";
 
@@ -11,16 +11,20 @@ import { AuthModule } from "./auth/auth.module";
       envFilePath: [`.env.stage.${process.env.STAGE}`],
     }),
     TasksModule,
-    TypeOrmModule.forRoot({
-      type: "postgres",
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT!),
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      entities: [Task],
-      autoLoadEntities: true,
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        type: "postgres",
+        entities: [Task],
+        autoLoadEntities: true,
+        synchronize: true,
+        host: configService.get("DATABASE_HOST"),
+        port: configService.get("DATABASE_PORT"),
+        username: configService.get("DATABASE_USERNAME"),
+        password: configService.get("DATABASE_PASSWORD"),
+        database: configService.get("DATABASE_NAME"),
+      }),
     }),
     AuthModule,
   ],
