@@ -12,10 +12,11 @@ export class TasksRepository extends Repository<Task> {
     super(Task, dataSource.createEntityManager());
   }
 
-  async getTasks(filterdto: GetTasksFilterDto): Promise<Task[]> {
+  async getTasks(filterdto: GetTasksFilterDto, user: User): Promise<Task[]> {
     const { status, search } = filterdto;
 
     const query = this.createQueryBuilder("task");
+    query.where({ user });
 
     // Status filter
     if (status) {
@@ -25,7 +26,7 @@ export class TasksRepository extends Repository<Task> {
     // Search filter
     if (search) {
       query.andWhere(
-        "LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search)",
+        "(LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search))",
         { search: `%${search}%` },
       );
     }
