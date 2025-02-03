@@ -1,14 +1,17 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import { ValidationPipe } from "@nestjs/common";
+import { ValidationPipe, Logger } from "@nestjs/common";
 import { TransformInterceptor } from "./transform.interceptor";
 
 async function bootstrap() {
+  const logger = new Logger();
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
   await app.listen(process.env.PORT ?? 3000);
-  console.log("🗄️  Server is running");
-  console.log("🛢️  Connected To Database");
+  logger.log(
+    `🗄️  Server is running, application listening on port ${process.env.PORT}`,
+  );
+  logger.log("🛢️  Connected To Database");
 }
 bootstrap();
